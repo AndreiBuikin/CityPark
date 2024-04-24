@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TypeTicket extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'description', 'price'];
+
     public function tickets(){
         return $this->hasMany(Ticket::class);
     }

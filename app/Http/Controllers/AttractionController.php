@@ -9,6 +9,7 @@ use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Attraction;
 use App\Models\CategoryAttraction;
+use App\Models\CategorySouvenir;
 use Illuminate\Http\Request;
 
 class AttractionController extends Controller
@@ -72,5 +73,40 @@ class AttractionController extends Controller
 
         $attraction->delete();
         return response()->json('Удалено')->setStatusCode(410,'Gone');
+    }
+
+
+    public function showCategoryAttractions(){
+        $categories = CategoryAttraction::all();
+        return response()->json($categories)->setStatusCode(200,'Ok');
+    }
+    public function showCategoryAttraction($id){
+        $category = CategoryAttraction::find($id);
+        if (!$category) {
+            throw new ApiException(404, 'Not Found');
+        }
+        return response()->json($category)->setStatusCode(200,'Ok');
+    }
+    public function showCategorySouvenirs(){
+        $categories = CategorySouvenir::all();
+        return response()->json($categories)->setStatusCode(200,'Ok');
+    }
+    public function showCategorySouvenir($id){
+        $category = CategorySouvenir::find($id);
+        if (!$category) {
+            throw new ApiException(404, 'Not Found');
+        }
+        return response()->json($category)->setStatusCode(200,'Ok');
+    }
+    public function attractions(){
+        $attractions = Attraction::all();
+        return response()->json($attractions)->setStatusCode(200,'Ok');
+    }
+    public function attraction($id){
+        $attraction = Attraction::find($id);
+        if (!$attraction) {
+            throw new ApiException(404, 'Not Found');
+        }
+        return response()->json($attraction)->setStatusCode(200,'Ok');
     }
 }

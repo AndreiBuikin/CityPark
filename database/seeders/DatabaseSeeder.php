@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             AttractionSeeder::class,
             CategorySouvenirSeeder::class,
             SouvenirSeeder::class,
+            TypeTicketSeeder::class,
         ]);
     }
 }

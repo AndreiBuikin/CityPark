@@ -74,4 +74,18 @@ class SouvenirController extends Controller
         $souvenir->delete();
         return response()->json('Удалено')->setStatusCode(410,'Gone');
     }
+
+
+
+    public function souvenirs(){
+        $souvenirs = Souvenir::all();
+        return response()->json($souvenirs)->setStatusCode(200,'Ok');
+    }
+    public function souvenir($id){
+        $souvenir = Souvenir::find($id);
+        if (!$souvenir) {
+            throw new ApiException(404, 'Not Found');
+        }
+        return response()->json($souvenir)->setStatusCode(200,'Ok');
+    }
 }
