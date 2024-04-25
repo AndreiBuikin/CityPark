@@ -8,6 +8,12 @@ use App\Http\Controllers\AttractionController;
 use App\Http\Controllers\SouvenirController;
 use App\Http\Controllers\NewController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CartController;
+
+Route::middleware('auth:api')->get('/full', [UserController::class, 'full']);
+Route::middleware('auth:api')->get('/getRole', [UserController::class, 'getRole']);
+
+
 
 Route::post('/reg',[AuthController::class,'create']);
 Route::post('/login',[AuthController::class,'login']);
@@ -45,9 +51,21 @@ Route::middleware('auth:api')->group(function (){
     Route::post('/user/update/{id}',[UserController::class,'update']);
     //Удаление
     Route::delete('/user/delete/{id}',[UserController::class,'delete']);
+
+
+    //Корзина
+    //Добовление
+    Route::post('/addCart',[CartController::class,'add']);
+    //Редактирование
+    Route::patch('/updateCart/{id}',[CartController::class,'update']);
 });
 
 Route::middleware(['auth:api','role:admin'])->group(function (){
+
+    //Просмотр сотрудников
+    Route::get('/users',[UserController::class,'showUsers']);
+    //Просмотр ролей
+    Route::get('/roles',[UserController::class,'showRole']);
 
     //Добавление
     Route::post('/category/addAttraction',[AttractionController::class,'createCategory']);

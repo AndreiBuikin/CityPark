@@ -24,7 +24,6 @@ class NewUpdateRequest extends ApiRequest
     public function messages()
     {
         return [
-            'required' => 'Заполните поле :attribute',
             'title.max' => 'Используйте в поле :attribute максимум 64 символа.',
             'content.max' => 'Используйте в поле :attribute максимум 255 символа.',
             'min' => 'Используйте в поле :attribute минимум 1 символа.',
