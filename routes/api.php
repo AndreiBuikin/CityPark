@@ -56,6 +56,10 @@ Route::middleware('auth:api')->group(function (){
     Route::delete('/user/delete/{id}',[UserController::class,'delete']);
 
 
+    //Покупка билета
+    Route::post('/addTicket',[TicketController::class,'createTicket']);
+
+
     //Корзина
     //Добовление
     Route::post('/addCart',[CartController::class,'add']);
@@ -95,9 +99,6 @@ Route::middleware(['auth:api','role:admin'])->group(function (){
     Route::post('/updateTypeTicket/{id}',[TicketController::class,'updateType']);
     //Удаление
     Route::delete('/deleteTypeTicket/{id}',[TicketController::class,'deleteType']);
-
-    //Добавление билета
-    Route::post('/addTicket',[TicketController::class,'createTicket']);
 });
 
 Route::middleware(['auth:api','role:manager'])->group(function (){

@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 class NewController extends Controller
 {
     public function create(NewCreateRequest $request){
-        $photo = $request->file('photo')->store('uploads', 'public');
+        $photo = $request->file('photo')->storeAs('uploads/new', $request->file('photo')->getClientOriginalName(), 'public');
         $currentDateTime = Carbon::now()->format('Y-m-d H:i:s');
 
         $new = new Ne_w([

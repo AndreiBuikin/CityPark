@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function create(UserCreateRequest $request){
-        $photo = $request->file('photo')->store('uploads', 'public');
+        $photo = $request->file('photo')->storeAs('uploads/user', $request->file('photo')->getClientOriginalName(), 'public');
 
         $user = new User([
             'name' => $request->input('name'),
