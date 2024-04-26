@@ -11,6 +11,8 @@ use App\Models\Attraction;
 use App\Models\CategoryAttraction;
 use App\Models\CategorySouvenir;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class AttractionController extends Controller
 {
@@ -43,7 +45,8 @@ class AttractionController extends Controller
 
 
     public function createAttraction(AttractionCreateRequest $request){
-        $photo = $request->file('photo')->store('uploads', 'public');
+
+        $photo = $request->file('photo')->storeAs('uploads/attraction', $request->file('photo')->getClientOriginalName(), 'public');
 
         $attraction = new Attraction([
             'name' => $request->input('name'),
@@ -54,6 +57,7 @@ class AttractionController extends Controller
         $attraction->save();
         return response()->json($attraction)->setStatusCode(201,'Created');
     }
+
     public function updateAttraction(AttractionUpdateRequest $request, $id){
         $attraction = Attraction::find($id);
 
@@ -87,21 +91,19 @@ class AttractionController extends Controller
         }
         return response()->json($category)->setStatusCode(200,'Ok');
     }
-    public function showCategorySouvenirs(){
-        $categories = CategorySouvenir::all();
-        return response()->json($categories)->setStatusCode(200,'Ok');
-    }
-    public function showCategorySouvenir($id){
-        $category = CategorySouvenir::find($id);
-        if (!$category) {
-            throw new ApiException(404, 'Not Found');
-        }
-        return response()->json($category)->setStatusCode(200,'Ok');
-    }
+
+
+
+
+
+
+
+
     public function attractions(){
-        $attractions = Attraction::all();
-        return response()->json($attractions)->setStatusCode(200,'Ok');
+        $attraction = Attraction::all();
+        return response()->json($attraction)->setStatusCode(200,'Ok');
     }
+
     public function attraction($id){
         $attraction = Attraction::find($id);
         if (!$attraction) {

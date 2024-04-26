@@ -13,12 +13,15 @@ use Illuminate\Http\Request;
 
 class SouvenirController extends Controller
 {
-    public function createCategory(CategoryCreateRequest $request){
+    public function createCategory(CategoryCreateRequest $request)
+    {
         $category = new CategorySouvenir($request->all());
         $category->save();
-        return response()->json($category)->setStatusCode(201,'Created');
+        return response()->json($category)->setStatusCode(201, 'Created');
     }
-    public function updateCategory(CategoryUpdateRequest $request, $id){
+
+    public function updateCategory(CategoryUpdateRequest $request, $id)
+    {
         $category = CategorySouvenir::find($id);
 
         if (!$category) {
@@ -26,9 +29,11 @@ class SouvenirController extends Controller
         }
 
         $category->update($request->all());
-        return response()->json($category)->setStatusCode(200,'Ok');
+        return response()->json($category)->setStatusCode(200, 'Ok');
     }
-    public function deleteCategory($id){
+
+    public function deleteCategory($id)
+    {
         $category = CategorySouvenir::find($id);
 
         if (!$category) {
@@ -36,13 +41,13 @@ class SouvenirController extends Controller
         }
 
         $category->delete();
-        return response()->json('Удалено')->setStatusCode(410,'Gone');
+        return response()->json('Удалено')->setStatusCode(410, 'Gone');
     }
 
 
-
-    public function createSouvenir(SouvenirCreateRequest $request){
-        $photo = $request->file('photo')->store('uploads', 'public');
+    public function createSouvenir(SouvenirCreateRequest $request)
+    {
+        $photo = $request->file('photo')->storeAs('uploads/souvenir', $request->file('photo')->getClientOriginalName(), 'public');
 
         $souvenir = new Souvenir([
             'name' => $request->input('name'),
@@ -52,9 +57,11 @@ class SouvenirController extends Controller
             'photo' => $photo,
         ]);
         $souvenir->save();
-        return response()->json($souvenir)->setStatusCode(201,'Created');
+        return response()->json($souvenir)->setStatusCode(201, 'Created');
     }
-    public function updateSouvenir(SouvenirUpdateRequest $request, $id){
+
+    public function updateSouvenir(SouvenirUpdateRequest $request, $id)
+    {
         $souvenir = Souvenir::find($id);
 
         if (!$souvenir) {
@@ -62,9 +69,11 @@ class SouvenirController extends Controller
         }
 
         $souvenir->update($request->all());
-        return response()->json($souvenir)->setStatusCode(200,'Ok');
+        return response()->json($souvenir)->setStatusCode(200, 'Ok');
     }
-    public function deleteSouvenir($id){
+
+    public function deleteSouvenir($id)
+    {
         $souvenir = Souvenir::find($id);
 
         if (!$souvenir) {
@@ -72,20 +81,38 @@ class SouvenirController extends Controller
         }
 
         $souvenir->delete();
-        return response()->json('Удалено')->setStatusCode(410,'Gone');
+        return response()->json('Удалено')->setStatusCode(410, 'Gone');
     }
 
 
-
-    public function souvenirs(){
+    public function souvenirs()
+    {
         $souvenirs = Souvenir::all();
-        return response()->json($souvenirs)->setStatusCode(200,'Ok');
+        return response()->json($souvenirs)->setStatusCode(200, 'Ok');
     }
-    public function souvenir($id){
+
+    public function souvenir($id)
+    {
         $souvenir = Souvenir::find($id);
         if (!$souvenir) {
             throw new ApiException(404, 'Not Found');
         }
-        return response()->json($souvenir)->setStatusCode(200,'Ok');
+        return response()->json($souvenir)->setStatusCode(200, 'Ok');
+    }
+
+
+    public function showCategorySouvenirs()
+    {
+        $categories = CategorySouvenir::all();
+        return response()->json($categories)->setStatusCode(200, 'Ok');
+    }
+
+    public function showCategorySouvenir($id)
+    {
+        $category = CategorySouvenir::find($id);
+        if (!$category) {
+            throw new ApiException(404, 'Not Found');
+        }
+        return response()->json($category)->setStatusCode(200, 'Ok');
     }
 }

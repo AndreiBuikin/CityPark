@@ -10,6 +10,9 @@ use App\Http\Controllers\NewController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CartController;
 
+
+
+
 Route::middleware('auth:api')->get('/full', [UserController::class, 'full']);
 Route::middleware('auth:api')->get('/getRole', [UserController::class, 'getRole']);
 
@@ -28,8 +31,8 @@ Route::get('/attraction/{id}',[AttractionController::class,'attraction']);
 
 
 //Категории сувениров
-Route::get('/showCategorySouvenirs',[AttractionController::class,'showCategorySouvenirs']);
-Route::get('/showCategorySouvenir/{id}',[AttractionController::class,'showCategorySouvenir']);
+Route::get('/showCategorySouvenirs',[SouvenirController::class,'showCategorySouvenirs']);
+Route::get('/showCategorySouvenir/{id}',[SouvenirController::class,'showCategorySouvenir']);
 //Сувениры
 Route::get('/souvenirs',[SouvenirController::class,'souvenirs']);
 Route::get('/souvenir/{id}',[SouvenirController::class,'souvenir']);
@@ -57,7 +60,9 @@ Route::middleware('auth:api')->group(function (){
     //Добовление
     Route::post('/addCart',[CartController::class,'add']);
     //Редактирование
-    Route::patch('/updateCart/{id}',[CartController::class,'update']);
+    Route::patch('/updateCart',[CartController::class,'update']);
+    //Удаление
+    Route::delete('/deleteCart',[CartController::class,'delete']);
 });
 
 Route::middleware(['auth:api','role:admin'])->group(function (){
