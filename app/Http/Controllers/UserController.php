@@ -29,7 +29,7 @@ class UserController extends Controller
 
 
         public function full(Request $request) {
-            // Get the authenticated user using the access token
+
             $user = $request->user();
 
             if ($user) {

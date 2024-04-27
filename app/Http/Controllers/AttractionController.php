@@ -94,11 +94,6 @@ class AttractionController extends Controller
 
 
 
-
-
-
-
-
     public function attractions(){
         $attraction = Attraction::all();
         return response()->json($attraction)->setStatusCode(200,'Ok');

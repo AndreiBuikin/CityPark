@@ -6,10 +6,13 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\TicketCreateRequest;
 use App\Http\Requests\TypeTicketCreateRequest;
 use App\Http\Requests\TypeTicketUpdateRequest;
+use App\Models\Order;
+use App\Models\OrderList;
 use App\Models\Ticket;
 use App\Models\TypeTicket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -40,7 +43,6 @@ class TicketController extends Controller
     }
 
     public function createTicket(TicketCreateRequest $request){
-
         $prices = [
             1 => TypeTicket::where('name', 'Экстрим тройка')->value('price'),
             2 => TypeTicket::where('name', 'Экстрим шестерка')->value('price'),
@@ -55,22 +57,45 @@ class TicketController extends Controller
             4 => 12
         ];
 
+        $userId = Auth::id();
         $typeTicketId = $request->input('type_tickets_id');
 
         $ticket = new Ticket([
+            'user_id' => $userId,
             'total' => $prices[$typeTicketId],
             'type_tickets_id' => $typeTicketId,
         ]);
 
         $datetimeStart = Carbon::now();
         $datetimeEnd = $datetimeStart->copy()->addHours($hoursToAdd[$typeTicketId]);
-
         $ticket->datetimeStart = $datetimeStart->format('Y-m-d H:i:s');
         $ticket->datetimeEnd = $datetimeEnd->format('Y-m-d H:i:s');
-
         $ticket->save();
-        return response()->json($ticket)->setStatusCode(201, 'Created');
 
+        $cart_id = $request->input('cart_id');
+
+        if ($cart_id !== null) {
+            $orderList = OrderList::create([
+                'ticket_id' => $ticket->id,
+                'user_id' => $userId,
+                'cart_id' => $cart_id,
+            ]);
+        } else {
+            $orderList = OrderList::create([
+                'ticket_id' => $ticket->id,
+                'user_id' => $userId,
+                'cart_id' => null,
+            ]);
+        }
+
+
+        Order::create([
+            'total' => $prices[$typeTicketId],
+            'order_lists_id' => $orderList->id,
+        ]);
+
+
+        return response()->json($ticket)->setStatusCode(201, 'Created');
     }
 
 
@@ -82,4 +107,37 @@ class TicketController extends Controller
         $type = TypeTicket::find($id);
         return response()->json($type)->setStatusCode(200,'Ok');
     }
+
+
+    public function popular(){
+        $popularTypeTickets = Ticket::groupBy('type_tickets_id')
+            ->selectRaw('type_tickets_id, COUNT(*) as total')
+            ->orderByDesc('total')
+            ->first();
+
+        if ($popularTypeTickets) {
+            $typeTicket = TypeTicket::find($popularTypeTickets->type_tickets_id);
+            if ($typeTicket) {
+                $count = $popularTypeTickets->total;
+
+                $rete =  'Популярный тариф: ' . $typeTicket->name;
+                $description =  'Описание тарифа: ' . $typeTicket->description;
+                $count =  'Количество покупок: ' . $count;
+
+                return [
+                    $rete,
+                    $description,
+                    $count,
+                ];
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+
+
+    }
 }
+

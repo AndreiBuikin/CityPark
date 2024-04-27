@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('login', 255)->unique();
 
             $table->string('token')->nullable()->unique();
-            $table->foreignId('role_id')->constrained('roles','id')->onUpdate('cascade');
+            $table->foreignId('role_id')->default(2)->constrained('roles','id')->onUpdate('cascade');
             $table->string('photo')->nullable();
             $table->timestamps();
         });

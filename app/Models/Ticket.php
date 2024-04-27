@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['total', 'datetimeStart', 'datetimeEnd', 'type_tickets_id'];
+    protected $fillable = ['total', 'datetimeStart', 'datetimeEnd', 'type_tickets_id', 'user_id'];
 
     public function user(){
         return $this->belongsTo(User::class);

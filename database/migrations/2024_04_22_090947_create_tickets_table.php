@@ -14,6 +14,7 @@ return new class extends Migration
             $table->dateTime('datetimeStart');
             $table->dateTime('datetimeEnd');
 
+            $table->foreignId('user_id')->constrained('users','id')->onUpdate('cascade');
             $table->foreignId('type_tickets_id')->constrained('type_tickets','id')->onUpdate('cascade');
             $table->timestamps();
         });

@@ -9,6 +9,8 @@ use App\Http\Controllers\SouvenirController;
 use App\Http\Controllers\NewController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PhotoController;
+
 
 
 
@@ -58,15 +60,18 @@ Route::middleware('auth:api')->group(function (){
 
     //Покупка билета
     Route::post('/addTicket',[TicketController::class,'createTicket']);
+    //покупка сувенира
+    Route::post('/purchase',[SouvenirController::class,'purchase']);
 
 
     //Корзина
     //Добовление
     Route::post('/addCart',[CartController::class,'add']);
     //Редактирование
-    Route::patch('/updateCart',[CartController::class,'update']);
+    Route::post('/updateCart',[CartController::class,'update']);
     //Удаление
     Route::delete('/deleteCart',[CartController::class,'delete']);
+
 });
 
 Route::middleware(['auth:api','role:admin'])->group(function (){
@@ -90,8 +95,11 @@ Route::middleware(['auth:api','role:admin'])->group(function (){
     //Удаление
     Route::delete('/deleteAttraction/{id}',[AttractionController::class,'deleteAttraction']);
 
-    //Доступ к просмотру популярного тарифа.
-    //Информация о доходе за определенный период времени.
+
+    //Доступ к просмотру популярного тарифа
+    Route::get('/popular',[TicketController::class,'popular']);
+    //Информация о доходе за определенный период времени
+
 
     //Добавление
     Route::post('/addTypeTicket',[TicketController::class,'createType']);
@@ -126,4 +134,7 @@ Route::middleware(['auth:api','role:editor'])->group(function (){
     Route::post('/news/{id}',[NewController::class,'update']);
     //Удаление
     Route::delete('/news/{id}',[NewController::class,'delete']);
+
+    //Добавление фотогалереи
+    Route::post('/addPhoto',[PhotoController::class,'create']);
 });

@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function create(UserCreateRequest $request){
-        $photo = $request->file('photo')->storeAs('uploads/user', $request->file('photo')->getClientOriginalName(), 'public');
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->storeAs('uploads/user', $request->file('photo')->getClientOriginalName(), 'public');
+        } else {
+            $photo = null;
+        }
 
         $user = new User([
             'name' => $request->input('name'),
@@ -21,10 +25,10 @@ class AuthController extends Controller
             'patronymic' => $request->input('patronymic'),
             'password' => $request->input('password'),
             'login' => $request->input('login'),
-            'photo' => $photo
+            'photo' => $photo,
+            'role_id' => $request->input('role_id')
         ]);
 
-        $user->role_id = 2;
         $user->save();
 
         return response('Регистрация прошла успешно')->setStatusCode(201,'Created');

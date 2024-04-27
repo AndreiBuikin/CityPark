@@ -18,7 +18,8 @@ class UserCreateRequest extends ApiRequest
             'patronymic' => 'nullable|string|min:1|max:64',
             'password' => 'required|string|min:1|max:255|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])/',
             'login' => 'required|string|min:1|max:255',
-            'photo' => 'required|file|mimes:jpeg,jpg,png,webp',
+            'photo' => 'file|mimes:jpeg,jpg,png,webp',
+            'role_id' => 'integer|min:1'
         ];
     }
     public function messages()

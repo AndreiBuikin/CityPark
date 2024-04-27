@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name','path'];
+
     public function users(){
         return $this->hasMany(User::class);
     }

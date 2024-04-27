@@ -17,7 +17,6 @@ class CartCreateRequest extends ApiRequest
             'quantity' => 'required|integer|min:1',
             'total' => 'numeric|regex:/^\d{0,10}(\.\d{1,2})?$/',
             'souvenir_id' => 'required|integer|min:1',
-
         ];
     }
     public function messages()
