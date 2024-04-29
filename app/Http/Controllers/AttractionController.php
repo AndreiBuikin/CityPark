@@ -10,6 +10,7 @@ use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Attraction;
 use App\Models\CategoryAttraction;
 use App\Models\CategorySouvenir;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -62,11 +63,21 @@ class AttractionController extends Controller
         $attraction = Attraction::find($id);
 
         if (!$attraction) {
-            throw new ApiException(404, 'Not Found');
+            return response()->json(['message' => 'Photo not found'], 404);
         }
 
-        $attraction->update($request->all());
-        return response()->json($attraction)->setStatusCode(200,'Ok');
+        $attraction->name = $request->input('name', $attraction->name);
+        $attraction->description = $request->input('description', $attraction->description);
+        $attraction->category_attraction_id = $request->input('category_attraction_id', $attraction->category_attraction_id);
+        $attraction->photo = $request->input('photo', $attraction->photo);
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->storeAs('uploads/attraction', $request->file('photo')->getClientOriginalName(), 'public');
+            $attraction->photo = $photo;
+        }
+
+        $attraction->save();
+        return response()->json($attraction)->setStatusCode(200);
     }
     public function deleteAttraction($id){
         $attraction = Attraction::find($id);

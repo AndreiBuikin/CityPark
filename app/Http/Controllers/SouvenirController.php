@@ -69,11 +69,22 @@ class SouvenirController extends Controller
         $souvenir = Souvenir::find($id);
 
         if (!$souvenir) {
-            throw new ApiException(404, 'Not Found');
+            return response()->json(['message' => 'Photo not found'], 404);
         }
 
-        $souvenir->update($request->all());
-        return response()->json($souvenir)->setStatusCode(200, 'Ok');
+        $souvenir->name = $request->input('name', $souvenir->name);
+        $souvenir->description = $request->input('description', $souvenir->description);
+        $souvenir->price = $request->input('price', $souvenir->price);
+        $souvenir->category_souvenir_id = $request->input('category_souvenir_id', $souvenir->category_souvenir_id);
+        $souvenir->photo = $request->input('photo', $souvenir->photo);
+
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->storeAs('uploads/souvenir', $request->file('photo')->getClientOriginalName(), 'public');
+            $souvenir->photo = $photo;
+        }
+
+        $souvenir->save();
+        return response()->json($souvenir)->setStatusCode(200);
     }
 
     public function deleteSouvenir($id)

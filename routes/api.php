@@ -99,6 +99,7 @@ Route::middleware(['auth:api','role:admin'])->group(function (){
     //Доступ к просмотру популярного тарифа
     Route::get('/popular',[TicketController::class,'popular']);
     //Информация о доходе за определенный период времени
+    Route::get('/income',[TicketController::class,'income']);
 
 
     //Добавление
@@ -109,7 +110,7 @@ Route::middleware(['auth:api','role:admin'])->group(function (){
     Route::delete('/deleteTypeTicket/{id}',[TicketController::class,'deleteType']);
 });
 
-Route::middleware(['auth:api','role:manager'])->group(function (){
+Route::middleware(['auth:api','role:manager|admin'])->group(function (){
 
     //Добавление
     Route::post('/category/addSouvenir',[SouvenirController::class,'createCategory']);
@@ -126,7 +127,7 @@ Route::middleware(['auth:api','role:manager'])->group(function (){
     Route::delete('/deleteSouvenir/{id}',[SouvenirController::class,'deleteSouvenir']);
 });
 
-Route::middleware(['auth:api','role:editor'])->group(function (){
+Route::middleware(['auth:api','role:editor|admin'])->group(function (){
 
     //Добавление
     Route::post('/news',[NewController::class,'create']);
@@ -137,4 +138,8 @@ Route::middleware(['auth:api','role:editor'])->group(function (){
 
     //Добавление фотогалереи
     Route::post('/addPhoto',[PhotoController::class,'create']);
+    //Редактирование
+    Route::post('/updatePhoto/{id}',[PhotoController::class,'update']);
+    //Удаление
+    Route::delete('/deletePhoto/{id}',[PhotoController::class,'delete']);
 });

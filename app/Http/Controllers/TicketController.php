@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
+use App\Http\Requests\IncomeRequest;
 use App\Http\Requests\TicketCreateRequest;
 use App\Http\Requests\TypeTicketCreateRequest;
 use App\Http\Requests\TypeTicketUpdateRequest;
@@ -135,9 +136,19 @@ class TicketController extends Controller
         } else {
             return null;
         }
+    }
 
+    public function income(IncomeRequest $request){
+        $startTime = Carbon::parse($request->input('created_at'));
+        $endTime = Carbon::parse($request->input('updated_at'));
 
+        $orders = Order::whereBetween('created_at', [$startTime, $endTime])
+            ->whereBetween('updated_at', [$startTime, $endTime])
+            ->get();
 
+        $totalSum = $orders->sum('total');
+
+        return response()->json($totalSum)->setStatusCode(200);
     }
 }
 
