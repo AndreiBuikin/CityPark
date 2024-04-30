@@ -47,8 +47,6 @@ Route::get('/typeTicket/{id}',[TicketController::class,'typeTicket']);
 
 
 Route::middleware('auth:api')->group(function (){
-    Route::get('/logout',[AuthController::class,'logout']);
-
     //Профиль
     //Просмотр
     Route::get('/user/show/{id}',[UserController::class,'show']);
@@ -72,6 +70,8 @@ Route::middleware('auth:api')->group(function (){
     //Удаление
     Route::delete('/deleteCart',[CartController::class,'delete']);
 
+    //Выход
+    Route::get('/logout',[AuthController::class,'logout']);
 });
 
 Route::middleware(['auth:api','role:admin'])->group(function (){

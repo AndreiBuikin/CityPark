@@ -53,19 +53,18 @@ class UserController extends Controller
         return response()->json($user)->setStatusCode(200,'Ok');
     }
 
+    public function full(Request $request) {
 
-        public function full(Request $request) {
+        $user = $request->user();
 
-            $user = $request->user();
+        if ($user) {
+            $fullname = $user->surname . ' ' . $user->name;
 
-            if ($user) {
-                $fullname = $user->surname . ' ' . $user->name;
-
-                return $fullname;
-            } else {
-                return 'User not found';
-            }
+            return $fullname;
+        } else {
+            return 'User not found';
         }
+    }
 
     public function getRole(Request $request) {
         // Получаем аутентифицированного пользователя, используя токен доступа

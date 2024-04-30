@@ -39,7 +39,7 @@ class AuthController extends Controller
             ->first();
 
         if (!$user) {
-            throw new ApiException(400, 'Bad Request');
+            throw new ApiException(401, 'Authentication failed');
         }
         $newToken = Hash::make(microtime(true) * 1000);
         $user->token = $newToken;
@@ -55,6 +55,6 @@ class AuthController extends Controller
         }
         $user->token = null;
         $user->save();
-        return response()->json('Вы успешно вышли из аккаунта')->setStatusCode(200);
+        return response()->json('Вы успешно вышли из аккаунта')->setStatusCode(202, 'Accepted');
     }
 }
