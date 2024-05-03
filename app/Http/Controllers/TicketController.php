@@ -59,6 +59,7 @@ class TicketController extends Controller
         ];
 
         $userId = Auth::id();
+        $tell = Auth::user()->phone;
         $typeTicketId = $request->input('type_tickets_id');
 
         $ticket = new Ticket([
@@ -93,6 +94,7 @@ class TicketController extends Controller
         Order::create([
             'total' => $prices[$typeTicketId],
             'order_lists_id' => $orderList->id,
+            'phone' => $tell,
         ]);
 
 

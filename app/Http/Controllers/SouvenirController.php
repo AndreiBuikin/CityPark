@@ -134,6 +134,7 @@ class SouvenirController extends Controller
 
     public function purchase(Request $request){
         $userId = Auth::id();
+        $tell = Auth::user()->phone;
 
         $cart = Cart::where('user_id', $userId)->first();
         $total = $cart->total;
@@ -154,6 +155,7 @@ class SouvenirController extends Controller
         Order::create([
             'total' => $total,
             'order_lists_id' => $orderList->id,
+            'phone' => $tell,
         ]);
     }
 }

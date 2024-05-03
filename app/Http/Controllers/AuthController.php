@@ -26,12 +26,13 @@ class AuthController extends Controller
             'password' => $request->input('password'),
             'login' => $request->input('login'),
             'photo' => $photo,
+            'phone' => $request->input('phone'),
             'role_id' => $request->input('role_id')
         ]);
 
         $user->save();
 
-        return response('Регистрация прошла успешно')->setStatusCode(201,'Created');
+        return response()->json($user)->setStatusCode(201,'Created');
     }
     public function login(LoginRequest $request){
         $user = User::where('login', $request->login)

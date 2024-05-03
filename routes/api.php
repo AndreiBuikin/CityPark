@@ -63,6 +63,9 @@ Route::middleware('auth:api')->group(function (){
 
 
     //Корзина
+    //Просмотр
+    Route::get('/showCart',[CartController::class,'allShow']);
+    Route::get('/showCart/{id}',[CartController::class,'show']);
     //Добовление
     Route::post('/addCart',[CartController::class,'add']);
     //Редактирование

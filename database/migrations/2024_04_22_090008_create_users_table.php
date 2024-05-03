@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('patronymic',32)->nullable();
             $table->string('password', 255);
             $table->string('login', 255)->unique();
+            $table->string('phone')->unique();
+
 
             $table->string('token')->nullable()->unique();
             $table->foreignId('role_id')->default(2)->constrained('roles','id')->onUpdate('cascade');

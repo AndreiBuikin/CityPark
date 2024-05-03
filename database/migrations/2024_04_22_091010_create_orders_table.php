@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->decimal('total',12,2);
+            $table->string('phone')->unique();
 
             $table->foreignId('order_lists_id')->constrained('order_lists','id')->onUpdate('cascade');
             $table->timestamps();

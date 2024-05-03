@@ -15,11 +15,12 @@ class UserCreateRequest extends ApiRequest
         return [
             'name' => 'required|string|min:1|max:64',
             'surname' => 'required|string|min:1|max:64',
-            'patronymic' => 'nullable|string|min:1|max:64',
+            'patronymic' => 'string|min:1|max:64',
             'password' => 'required|string|min:1|max:255|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])/',
             'login' => 'required|string|min:1|max:255',
             'photo' => 'file|mimes:jpeg,jpg,png,webp',
-            'role_id' => 'integer|min:1'
+            'phone' => 'required|string|min:1|max:11',
+            'role_id' => 'nullable|integer|min:1'
         ];
     }
     public function messages()

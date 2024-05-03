@@ -58,4 +58,13 @@ class CartController extends Controller
         $cart->delete();
         return response()->json('Удалено')->setStatusCode(410,'Gone');
     }
+
+    public function show($id){
+        $cart = Cart::where('user_id',$id)->first();
+        return response()->json($cart)->setStatusCode(200);
+    }
+    public function allShow(){
+        $cart = Cart::all();
+        return response()->json($cart)->setStatusCode(200);
+    }
 }

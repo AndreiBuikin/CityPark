@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['total','order_lists_id'];
+    protected $fillable = ['total','order_lists_id','phone'];
 
     public function OrderList(){
         return $this->belongsTo(OrderList::class);
