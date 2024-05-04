@@ -44,6 +44,9 @@ Route::get('/souvenir/{id}',[SouvenirController::class,'souvenir']);
 Route::get('/typeTickets',[TicketController::class,'typeTickets']);
 Route::get('/typeTicket/{id}',[TicketController::class,'typeTicket']);
 
+Route::get('/galereyon',[NewController::class,'showNem']);
+Route::get('/galereyon/all/{id}',[NewController::class,'showAll']);
+
 
 
 Route::middleware('auth:api')->group(function (){

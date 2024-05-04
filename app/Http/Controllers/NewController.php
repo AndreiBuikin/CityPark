@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\NewCreateRequest;
 use App\Http\Requests\NewUpdateRequest;
 use App\Models\Ne_w;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -43,5 +44,14 @@ class NewController extends Controller
 
         $new->delete();
         return response()->json('Удалено')->setStatusCode(410,'Gone');
+    }
+
+    public function showNem(){
+        $photo = Photo::all();
+        return response()->json($photo)->setStatusCode(200);
+    }
+    public function showAll($id){
+        $photo = Photo::find($id);
+        return response()->json($photo)->setStatusCode(200);
     }
 }
