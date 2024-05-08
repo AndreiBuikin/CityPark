@@ -8,6 +8,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -50,6 +51,7 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
+
         $user = $request->user();
         if (!$user) {
             throw new ApiException(401, 'Unauthorized');

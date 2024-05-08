@@ -16,7 +16,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return response()->json(['message' => 'Photo not found'], 404);
+            return response()->json(['message' => 'not found'], 404);
         }
 
         $user->name = $request->input('name', $user->name);

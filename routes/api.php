@@ -11,13 +11,8 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PhotoController;
 
-
-
-
-
 Route::middleware('auth:api')->get('/full', [UserController::class, 'full']);
 Route::middleware('auth:api')->get('/getRole', [UserController::class, 'getRole']);
-
 
 
 Route::post('/reg',[AuthController::class,'create']);

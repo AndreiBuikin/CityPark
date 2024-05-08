@@ -18,7 +18,7 @@ class SouvenirCreateRequest extends ApiRequest
             'description' => 'required|string|min:1|max:255',
             'price' => 'required|numeric|regex:/^\d{0,10}(\.\d{1,2})?$/',
             'category_souvenir_id' => 'required|integer|min:1',
-            'photo' => 'required|file|mimes:jpeg,jpg,png,webp',
+            'photo' => 'nullable|file|mimes:jpeg,jpg,png,webp',
         ];
     }
     public function messages()

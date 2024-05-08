@@ -51,7 +51,11 @@ class SouvenirController extends Controller
 
     public function createSouvenir(SouvenirCreateRequest $request)
     {
-        $photo = $request->file('photo')->storeAs('uploads/souvenir', $request->file('photo')->getClientOriginalName(), 'public');
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->storeAs('uploads/souvenir', $request->file('photo')->getClientOriginalName(), 'public');
+        } else {
+            $photo = null;
+        }
 
         $souvenir = new Souvenir([
             'name' => $request->input('name'),
