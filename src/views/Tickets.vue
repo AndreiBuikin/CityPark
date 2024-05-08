@@ -23,7 +23,13 @@
       </form>
     </div>
   </template>
-  
+
+<style scoped>
+.container {
+  margin-bottom: 368px;
+}
+</style>
+
   <script setup>
   import { ref } from "vue";
   

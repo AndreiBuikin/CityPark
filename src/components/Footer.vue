@@ -22,10 +22,10 @@
       </div>
     </footer>
   </template>
-  
+
   <style scoped>
   footer {
     background-color: #343a40;
   }
+
   </style>
-  

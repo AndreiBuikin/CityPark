@@ -14,9 +14,16 @@
       </form>
     </div>
   </template>
-  
+
+<style scoped>
+.container {
+  margin-bottom: 454px;
+}
+</style>
+
   <script setup>
   import { ref } from "vue";
+  import Footer from "@/App.vue";
   
   const username = ref("");
   const password = ref("");

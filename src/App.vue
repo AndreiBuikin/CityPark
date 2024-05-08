@@ -1,8 +1,10 @@
 <!-- src/App.vue -->
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <div id="app">
       <Header />
+
       <router-view />
+
       <Footer />
     </div>
   </template>
@@ -17,5 +19,6 @@
   body {
     background-color: #f8f9fa;
   }
+
   </style>
   

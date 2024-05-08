@@ -3,7 +3,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          <a class="navbar-brand" href="#">Парк Развлечений</a>
+          <a class="navbar-brand" href="#">Городской сад</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -47,6 +47,15 @@
   <style scoped>
   .navbar {
     background-color: #e3f2fd;
+  }
+  ul {
+    list-style-type: none;
+  }
+  a {
+    color: black;
+  }
+  a:hover {
+    color: grey;
   }
   </style>
   

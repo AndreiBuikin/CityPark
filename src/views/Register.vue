@@ -17,8 +17,14 @@
         <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
       </form>
     </div>
-  </template>
-  
+</template>
+
+<style scoped>
+.container {
+  margin-bottom: 368px;
+}
+</style>
+
   <script setup>
   import { ref } from "vue";
   
